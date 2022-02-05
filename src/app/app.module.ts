@@ -7,10 +7,14 @@ import { APP_ROUTES } from './app.routes';
 //modulos
 import { pagesModule } from './pages/pages.module';
 
+//servicios
+import { SettingsService } from './services/settings.service';
+
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './login/register.component';
 import { FormsModule } from '@angular/forms';
+
 
 
 @NgModule({
@@ -25,7 +29,7 @@ import { FormsModule } from '@angular/forms';
     APP_ROUTES,
     FormsModule
   ],
-  providers: [],
+  providers: [SettingsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
