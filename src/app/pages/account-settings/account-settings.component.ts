@@ -17,7 +17,7 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   cambiarColor(tema : string, link: any){
-    console.log(tema);
+    //console.log(tema);
 
     this._ajustes.aplicarTema(tema)
     this.aplicarCheck(link)

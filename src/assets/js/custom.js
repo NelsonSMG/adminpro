@@ -4,6 +4,11 @@ Author: Wrappixel
 Email: niravjoshi87@gmail.com
 File: js
 */
+
+function init_plugins(){
+
+console.log("init");
+
 $(function() {
     "use strict";
     $(function() {
@@ -155,3 +160,6 @@ $(function() {
     });
 
 });
+
+
+}
