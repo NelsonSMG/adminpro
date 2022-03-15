@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import * as _swal from 'sweetalert';
+
+import { SweetAlert } from 'sweetalert/typings/core';
+import { UsuarioService } from '../services/service.index';
+import { Usuario } from '../models/usuario.model';
+const swals: SweetAlert = _swal as any;
 
 declare function init_plugins(): any;
 
@@ -14,7 +20,9 @@ export class RegisterComponent implements OnInit {
 
   forma!: FormGroup;
 
-  constructor() {
+  constructor(
+    public _usuarioService: UsuarioService
+  ) {
     init_plugins();
   }
 
@@ -55,8 +63,30 @@ export class RegisterComponent implements OnInit {
   }
 
   registrarUsuario(){
+
+    if(this.forma.invalid){
+      return;
+    } 
+
+    if (!this.forma.value.condiciones){
+      swals("Importante", "Debe de aceptar las condiciones", "warning");
+      console.log("Debe de aceptar las condiciones");
+      return
+    }
     console.log('form valido ', this.forma.valid);
     console.log(this.forma.value);
+
+    let usuario = new Usuario(
+      this.forma.value.nombre,
+      this.forma.value.correo,
+      this.forma.value.password
+    )
+
+    this._usuarioService.crearUsuario(usuario)
+    .subscribe( resp => {
+      console.log(resp);
+    })
+
   }
 
 }
