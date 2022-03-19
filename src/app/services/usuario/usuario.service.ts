@@ -6,6 +6,7 @@ import { filter, map, Observable, retry, Subscriber, Subscription } from 'rxjs';
 
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
+import { Router } from '@angular/router';
 const swals: SweetAlert = _swal as any;
 
 @Injectable({
@@ -13,11 +14,47 @@ const swals: SweetAlert = _swal as any;
 })
 export class UsuarioService {
 
+  usuario!: Usuario;
+  token!: string;
+
   constructor(
-    public http: HttpClient
+    public http: HttpClient,
+    public router: Router
   ) {
     console.log('Servicio de usuario listo');
+    this,this.cargarStorage();
    }
+
+  cargarStorage(){
+    if ( localStorage.getItem('token')){
+      this.token = localStorage.getItem('token');
+      this.usuario = JSON.parse(localStorage.getItem('usuario'));
+    } else {
+      this.token = '';
+      this.usuario = null;
+    }
+  }
+
+  guardarStorage( id : string, token : string, usuario : Usuario ){
+
+    localStorage.setItem("id", id);
+    localStorage.setItem("token", token);
+    localStorage.setItem("usuario", JSON.stringify(usuario) );
+
+    this.usuario = usuario;
+    this.token = token;
+    
+  }
+
+  logout(){
+    this.usuario = null;
+    this.token = '';
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuario");
+    
+    this.router.navigate(['/login']);
+  }
 
   login( usuario: Usuario, recordar: boolean = false ){
     
@@ -32,14 +69,17 @@ export class UsuarioService {
     return this.http.post(url, usuario).pipe(
       map( (resp: any) => {
 
-        localStorage.setItem("id", resp.id);
-        localStorage.setItem("token", resp.token);
-        localStorage.setItem("usuario", JSON.stringify(resp.usuario) );
+        this.guardarStorage( resp.id, resp.token, resp.usuario);
+
         return true;
 
       })
     )
 
+  }
+
+  estaLogueado(){
+    return (this.token.length > 5)? true : false;
   }
 
   crearUsuario( usuario: Usuario ){
