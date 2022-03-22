@@ -7,6 +7,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 
 
+import { PipesModule } from '../pipes/pipes.module';
+
+
 @NgModule ({
     declarations: [
         BreadcrumbsComponent,
@@ -22,7 +25,8 @@ import { RouterModule } from '@angular/router';
     ],
     imports: [
         RouterModule,
-        CommonModule
+        CommonModule,
+        PipesModule
     ]
 })
 export class sharedModule { }

@@ -16,12 +16,16 @@ import { ProgressComponent } from './progress/progress.component';
 import { FormsModule } from '@angular/forms';
 
 
+//Pipes
+import { PipesModule } from '../pipes/pipes.module';
+
 //temporal
 import { IncrementadorComponent } from '../components/incrementador/incrementador.component';
 import { GraficoDonaComponent } from '../components/grafico-dona/grafico-dona.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromesasComponent } from './promesas/promesas.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+
 
 
 
@@ -47,7 +51,8 @@ import { RxjsComponent } from './rxjs/rxjs.component';
         sharedModule,
         PAGES_ROUTES,
         FormsModule,
-        NgChartsModule
+        NgChartsModule,
+        PipesModule
     ]
 })
 export class pagesModule { }
