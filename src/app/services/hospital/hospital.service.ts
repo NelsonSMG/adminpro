@@ -58,13 +58,16 @@ export class HospitalService {
 
   }
 
-  actualizarUsuario(hospital: Hospital){
+  actualizarHospital(hospital: Hospital){
     let url = URL_SERVICIOS + '/hospital/' + hospital._id;
     url += '?token=' + this._usuarioService.token;
     
     return this.http.put(url, hospital)
     .pipe(
-      map( ((resp:any) => resp.hospital) ));
+      map( ((resp:any) => {
+        swals("Hospital Actualizado", hospital.nombre, "success");
+        return resp.hospital
+      }) ));
   }
 
   borrarHospital(id: string){
